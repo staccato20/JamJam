@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>너와 나의 달달한 소스, JamJam</title>
+    <link href="{% static 'jamjamapp/css/login.css' %}" rel="stylesheet" />
+
+</head>
+
+<body>
+    <!--로그인 바 구현-->
+    <div class="login-container">
+        <div class="login-background">
+            <img src="{% static 'jamjamapp/img/loginback.jpg' %}">
+        </div>
+        <div class="login-box">
+            <div class="login-header">
+                <h1>잼잼 로그인</h1>
+                <p class="inform-if">처음 사용하는 유저라면?</p>
+                <a href="{% url 'signup' %}">회원가입</a>
+            </div>
+            {% if user.is_authenticated %}
+            <h2 class="masthead-subheading mb-0">{{user.username}}은 로그인 상태입니다.</h2>
+            <a href="{% url 'logout' %}"> logout</a>
+            {% else %}
+            <form method="POST" action="/signin">
+                {% csrf_token %}
+                <div>
+                    아이디 : <input name="username">
+                </div>
+                <div>
+                    비밀번호 : <input name="password">
+                </div>
+                <input type="submit" value="submit">
+            </form>
+            {% endif %}
+        </div>
+</body>
+
+</html>
